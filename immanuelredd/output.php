@@ -1,6 +1,5 @@
     <?php
 
-    
         session_start();
          
         $name = $_SESSION["lastname"]." ".$_SESSION["firstname"];
@@ -27,6 +26,7 @@
             color: white;
             text-align: center;
             width: 50%;
+
             display: block;
             padding: 10px !important;
             margin: 10px auto;
