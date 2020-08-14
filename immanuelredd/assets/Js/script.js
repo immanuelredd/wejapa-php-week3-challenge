@@ -1,15 +1,4 @@
-$(document).ready(function () {
-    $("input").focusout(function () {
-        if ($(this).val() == '') {
-            $(this).css('border', 'solid 1px red');
-        } else {
-            $(this).css('border', 'solid 1px green');
-        }
-    });
-
-});
-
-var myInput = document.getElementById("pass");
+/*var myInput = document.getElementById("password");
 var letter = document.getElementById("letter");
 var capital = document.getElementById("capital");
 var number = document.getElementById("number");
@@ -75,7 +64,84 @@ myInput.onkeyup = function () {
         length.classList.remove("valid");
         length.classList.add("invalid");
     }
+}*/
+
+
+const form = document.getElementById('form');
+const fname = document.getElementById('fname');
+const lname = document.getElementById('lname');
+const dob = document.getElementById('date');
+const email = document.getElementById('email');
+const pass = document.getElementById('password');
+
+form.addEventListener('submit', e => {
+    // trim to remove the whitespaces
+    const fnameValue = fname.value.trim();
+    const lnameValue = lname.value.trim();
+    const emailValue = email.value.trim();
+    const dobValue = dob.value.trim();
+    const passValue = pass.value.trim();
+    if (fnameValue === '') {
+        setErrorFor(fname, 'First Name cannot be blank');
+    } else {
+        setSuccessFor(fname);
+    }
+    if (lnameValue === '') {
+        setErrorFor(lname, 'Last Name cannot be blank');
+    } else {
+        setSuccessFor(lname);
+    }
+    if (dobValue === '') {
+        setErrorFor(dob, 'Date of birth cannot be blank');
+    } else {
+        setSuccessFor(dob);
+    }
+    if (emailValue === '') {
+        setErrorFor(email, 'Email cannot be blank');
+    } else if (!isEmail(emailValue)) {
+        setErrorFor(email, 'Not a valid email');
+    } else {
+        setSuccessFor(email);
+    }
+    if (passValue === '') {
+        setErrorFor(pass, 'Password cannot be blank');
+    } else if (!isPass(passValue)) {
+        setErrorFor(pass, 'An Uppercase, Lowercase, a symbol and 15 characters Required!');
+    } else {
+        setSuccessFor(pass);
+    }
+
+    if (fnameValue === "" && lnameValue === "" && dobValue === "" && emailValue === "" && passValue === "") {
+        e.preventDefault();
+    } else {
+        e.form.submit();
+    }
+});
+
+
+
+
+
+function setErrorFor(input, message) {
+    const formgroup = input.parentElement;
+    const small = formgroup.querySelector('small');
+    small.className = 'error';
+    small.innerText = message;
 }
+
+function setSuccessFor(input) {
+    const formgroup = input.parentElement;
+    formgroup.className = 'form-group success';
+}
+
+function isEmail(email) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+}
+
+/*function isPass(pass) {
+    var strongRegex = new RegExp("^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*])(?=.{8,})");
+    return strongRegex.test(pass);
+}*/
 
 function check(j) {
     var total = 0;
@@ -92,57 +158,3 @@ function check(j) {
     }
 
 }
-
-
-/*$('.checklist').on('change', function () {
-    $('.checklist').not(this).prop('checked', false);
-    $("#message").html("");
-    alert("Must be Male or Female");
-});*/
-
-
-$('form').submit(function (e) {
-    e.preventDefault();
-
-    let error = '';
-    let ferror = "";
-    let lerror = "";
-    let eerror = "";
-    let gerror = "";
-    let perror = "";
-    let derror = "";
-
-    if ($('#fname').val() == "") {
-        //error += "<span>* Firstname is required</span><br>";
-        $('#fErr').html(ferror += "First Name is required");
-    }
-    if ($('#lname').val() == "") {
-        //error += "<span>* lastname is required</span><br>";
-        $('#lErr').html(lerror += "Last Name is required");
-    }
-    if ($('#email').val() == "") {
-        $('#eErr').html(eerror += "email is required");
-    }
-    /*if ($('#gender').val() == "") {
-        $('#gErr').html(gerror += "You must select a Gender: Male or Female");
-    }
-    
-    if ($('#departments').val() == "") {
-        error += "okkk good to goo";
-    }*/
-
-    if ($('#dob').val() == "") {
-        $('#dobErr').html(derror += "Please enter your Date Of Birth!");
-    }
-    if ($('#pass').val() == "") {
-        $('#pErr').html(perror += "Password Cannot be empty");
-    }
-
-    if (error != "") {
-        $('#error').html(error);
-    } else {
-        $("form").unbind("submit").submit();
-    }
-
-
-});
